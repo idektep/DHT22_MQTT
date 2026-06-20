@@ -1,5 +1,93 @@
 [
     {
+        "id": "ed568cb55290859f",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e05f5fbba1643af5",
+        "type": "mqtt in",
+        "z": "ed568cb55290859f",
+        "name": "รับข้อมูล Sensor",
+        "topic": "",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "14f1397a9f2f2376",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "5f86f48f07ee8b31"
+            ]
+        ]
+    },
+    {
+        "id": "5f86f48f07ee8b31",
+        "type": "json",
+        "z": "ed568cb55290859f",
+        "name": "Parse JSON",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "23beb49579e91058",
+                "e0e73c1db6478edc",
+                "e019d5e0edeb51dd"
+            ]
+        ]
+    },
+    {
+        "id": "23beb49579e91058",
+        "type": "function",
+        "z": "ed568cb55290859f",
+        "name": "แยก Temperature",
+        "func": "msg.payload = msg.payload.temp;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 140,
+        "wires": [
+            [
+                "ec031f53918f7e71",
+                "d5ab7f254c22bfcf"
+            ]
+        ]
+    },
+    {
+        "id": "e0e73c1db6478edc",
+        "type": "function",
+        "z": "ed568cb55290859f",
+        "name": "แยก Humidity",
+        "func": "msg.payload = msg.payload.hum;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 220,
+        "wires": [
+            [
+                "168b0e7d251afdb1",
+                "b362bb534916f0d3"
+            ]
+        ]
+    },
+    {
         "id": "e019d5e0edeb51dd",
         "type": "debug",
         "z": "ed568cb55290859f",
@@ -11,7 +99,572 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 720,
-        "y": 360,
+        "y": 340,
         "wires": []
+    },
+    {
+        "id": "ec031f53918f7e71",
+        "type": "ui_gauge",
+        "z": "ed568cb55290859f",
+        "name": "Temperature",
+        "group": "1f1bce835307dc9b",
+        "order": 2,
+        "width": 6,
+        "height": 3,
+        "gtype": "gage",
+        "title": "อุณหภูมิ (°C)",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 50,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 25,
+        "seg2": 35,
+        "diff": false,
+        "className": "",
+        "x": 950,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "168b0e7d251afdb1",
+        "type": "ui_gauge",
+        "z": "ed568cb55290859f",
+        "name": "Humidity",
+        "group": "1f1bce835307dc9b",
+        "order": 4,
+        "width": 6,
+        "height": 3,
+        "gtype": "gage",
+        "title": "ความชื้น (%)",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#ca3838",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": 40,
+        "seg2": 70,
+        "diff": false,
+        "className": "",
+        "x": 940,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d5ab7f254c22bfcf",
+        "type": "ui_chart",
+        "z": "ed568cb55290859f",
+        "name": "กราฟอุณหภูมิ",
+        "group": "1f1bce835307dc9b",
+        "order": 13,
+        "width": 6,
+        "height": 4,
+        "label": "Temperature (°C)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "รอข้อมูล...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#e6194b",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 950,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b362bb534916f0d3",
+        "type": "ui_chart",
+        "z": "ed568cb55290859f",
+        "name": "กราฟความชื้น",
+        "group": "1f1bce835307dc9b",
+        "order": 15,
+        "width": 6,
+        "height": 4,
+        "label": "Humidity (%)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "รอข้อมูล...",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#4363d8",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 950,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ebf5e48c5af526b6",
+        "type": "ui_button",
+        "z": "ed568cb55290859f",
+        "name": "LED ON",
+        "group": "1f1bce835307dc9b",
+        "order": 27,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "💡 LED ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#f5a623",
+        "className": "",
+        "icon": "",
+        "payload": "LED_ON",
+        "payloadType": "str",
+        "topic": "esp32/commands",
+        "topicType": "str",
+        "x": 310,
+        "y": 420,
+        "wires": [
+            [
+                "f0626b30521afe96"
+            ]
+        ]
+    },
+    {
+        "id": "af3341f15325a6cf",
+        "type": "ui_button",
+        "z": "ed568cb55290859f",
+        "name": "LED OFF",
+        "group": "1f1bce835307dc9b",
+        "order": 28,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "💡 LED OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#7f8c8d",
+        "className": "",
+        "icon": "",
+        "payload": "LED_OFF",
+        "payloadType": "str",
+        "topic": "esp32/commands",
+        "topicType": "str",
+        "x": 310,
+        "y": 480,
+        "wires": [
+            [
+                "f0626b30521afe96"
+            ]
+        ]
+    },
+    {
+        "id": "eab6b30af7e9bf4b",
+        "type": "ui_button",
+        "z": "ed568cb55290859f",
+        "name": "BUZZER ON",
+        "group": "1f1bce835307dc9b",
+        "order": 30,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "🔔 BUZZER ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#e74c3c",
+        "className": "",
+        "icon": "",
+        "payload": "BUZZER_ON",
+        "payloadType": "str",
+        "topic": "esp32/commands",
+        "topicType": "str",
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "f0626b30521afe96"
+            ]
+        ]
+    },
+    {
+        "id": "24f088316f8a8238",
+        "type": "ui_button",
+        "z": "ed568cb55290859f",
+        "name": "BUZZER OFF",
+        "group": "1f1bce835307dc9b",
+        "order": 31,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "🔕 BUZZER OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#7f8c8d",
+        "className": "",
+        "icon": "",
+        "payload": "BUZZER_OFF",
+        "payloadType": "str",
+        "topic": "esp32/commands",
+        "topicType": "str",
+        "x": 310,
+        "y": 600,
+        "wires": [
+            [
+                "f0626b30521afe96"
+            ]
+        ]
+    },
+    {
+        "id": "f0626b30521afe96",
+        "type": "mqtt out",
+        "z": "ed568cb55290859f",
+        "name": "ส่งคำสั่ง",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "14f1397a9f2f2376",
+        "x": 570,
+        "y": 510,
+        "wires": []
+    },
+    {
+        "id": "9a9d65e0a93d2061",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "a95fcc27161a4c78",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 3,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b05794d75e3001f4",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "245c80e6442812bb",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "6991f4f4dc166efc",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "2d442be0ebc3b0f6",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 8,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9f4c5583f56b94d0",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 9,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "89adc235a795fd83",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 10,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "d9da4268de4ee297",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 11,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "be9557dd65d0c4ed",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 12,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "d6262faa7af1d0f6",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 14,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "134812a91a2cd80d",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 16,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "4de83fdf0b313083",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 17,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "2bbbf81c902e3153",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 18,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "982993f29acc98c9",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 19,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "064f6923fac6aea4",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 20,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "f18aaee93bd5a0f5",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 21,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "9312a5a7a1ed5fe7",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 22,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "921e566fc27309b5",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 23,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "554cd31ad6bc3dfc",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 24,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "34ca3871e41a565c",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 25,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "b186f4ce5c649830",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 26,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "09982b92c0787b81",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 29,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "d91098dc4bbdb5cf",
+        "type": "ui_spacer",
+        "z": "ed568cb55290859f",
+        "name": "spacer",
+        "group": "1f1bce835307dc9b",
+        "order": 32,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "14f1397a9f2f2376",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "1f1bce835307dc9b",
+        "type": "ui_group",
+        "name": "Sensor Data",
+        "tab": "99d44884a774100b",
+        "order": 1,
+        "disp": true,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "99d44884a774100b",
+        "type": "ui_tab",
+        "name": "ESP32 Control",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     }
 ]
