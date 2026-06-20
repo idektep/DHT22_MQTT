@@ -1,0 +1,17 @@
+[
+    {
+        "id": "e019d5e0edeb51dd",
+        "type": "debug",
+        "z": "ed568cb55290859f",
+        "name": "Debug Sensors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 720,
+        "y": 360,
+        "wires": []
+    }
+]
